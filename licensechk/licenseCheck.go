@@ -24,20 +24,23 @@ func (lc *LicenseChecker) Validate() bool {
 	}
 
 	//find LICENSE file in directory
-	for _, fi := range files {
+	for index, fi := range files {
 		if strings.EqualFold(fi.Name(), `LICENSE`) {
 			lc.filePath = lc.Path + string(os.PathSeparator) + fi.Name()
 			break
 		}
-		lc.issueCt++
-		lc.issues += `Issue: No LICENSE file`
-		return false
+		if index == len(files)-1 {
+			lc.issueCt++
+			lc.issues += `Issue: No LICENSE file`
+			return false
+		}
 	}
 
 	//open LICENSE file
 	bytes, err := ioutil.ReadFile(lc.filePath)
 	if err != nil {
 		lc.msg += `Failed to open file: ` + lc.filePath + "\n"
+		lc.issueCt++
 		return false
 	}
 	lc.msg += `Checking: ` + lc.filePath + "\n"
