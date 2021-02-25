@@ -17,7 +17,7 @@ func TestValidator(t *testing.T) {
 		&linefmtchk.LineFmtChecker{Path: path},
 		&utf8chk.UTF8Checker{Path: path},
 	}
-	//run each validator and display output polymorphically
+	//run each validator and raise an error if fails, as all tests should succeed
 	for _, unit := range valUnits {
 		if unit.Validate() {
 		} else {
