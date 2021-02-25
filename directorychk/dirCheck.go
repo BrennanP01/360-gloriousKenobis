@@ -30,23 +30,25 @@ func (dc *DirChecker) Validate() bool {
 	for _, fi := range files {
 		fileName = strings.ToUpper(fi.Name())
 		dc.msg += `Checking: ` + dc.Path + string(os.PathSeparator) + fi.Name() + "\n"
-
-		if fi.IsDir() { //validate subdirectories
-			tmpPath = dc.Path
-			dc.Path += string(os.PathSeparator) + fi.Name()
-			if !dc.Validate() {
-				status = false
+		if !strings.Contains(dc.Path, ".git") { //ignore git files
+			if fi.IsDir() { //validate subdirectories
+				tmpPath = dc.Path
+				dc.Path += string(os.PathSeparator) + fi.Name()
+				if !dc.Validate() {
+					status = false
+				}
+				dc.Path = tmpPath
+				continue
+			} else if strings.Contains(fileName, `VAL.EXE`) {
+				continue //skip executable
+			} else if !(strings.Contains(`LICENSE README.MD`, fileName) ||
+				strings.Contains(fileName, `.GO`) ||
+				strings.Contains(fileName, `.MOD`)) {
+				dc.issues += `Issue: ` + dc.Path + string(os.PathSeparator) + fi.Name() +
+					" is non-project file\n"
+				dc.issueCt++
+				status = false //file fail
 			}
-			dc.Path = tmpPath
-			continue
-		} else if strings.Contains(fileName, `VAL.EXE`) {
-			continue //skip executable
-		} else if !(strings.Contains(`LICENSE README.MD`, fileName) ||
-			strings.Contains(fileName, `.GO`) || strings.Contains(fileName, `.MOD`)) {
-			dc.issues += `Issue: ` + dc.Path + string(os.PathSeparator) + fi.Name() +
-				" is non-project file\n"
-			dc.issueCt++
-			status = false //file fail
 		}
 	}
 	return status
