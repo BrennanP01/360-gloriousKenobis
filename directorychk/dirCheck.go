@@ -30,7 +30,7 @@ func (dc *DirChecker) Validate() bool {
 	for _, fi := range files {
 		fileName = strings.ToUpper(fi.Name())
 		dc.msg += `Checking: ` + dc.Path + string(os.PathSeparator) + fi.Name() + "\n"
-		if !strings.Contains(dc.Path, ".git") {
+		if !strings.Contains(dc.Path, ".git") { //ignore git files
 			if fi.IsDir() { //validate subdirectories
 				tmpPath = dc.Path
 				dc.Path += string(os.PathSeparator) + fi.Name()
