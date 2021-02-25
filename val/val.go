@@ -1,14 +1,15 @@
 package main
 
 import (
-	"360-richard-goluszka/sprint-2/coding-standards-validator-part-1/directorychk"
-	"360-richard-goluszka/sprint-2/coding-standards-validator-part-1/licensechk"
-	"360-richard-goluszka/sprint-2/coding-standards-validator-part-1/linefmtchk"
-	"360-richard-goluszka/sprint-2/coding-standards-validator-part-1/utf8chk"
 	"bufio"
 	"fmt"
 	"os"
 	"strings"
+
+	"../directorychk"
+	"../licensechk"
+	"../linefmtchk"
+	"../utf8chk"
 )
 
 const borderChar = `=`
