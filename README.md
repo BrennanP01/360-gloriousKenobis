@@ -100,3 +100,21 @@ Test-00
 2. Run /val/val.go
 3. Enter `./test-04` as the file path
 4. One test should succeed
+
+Automated Testing: directorychk
+-------------------------------
+1. Navigate to .../directorychk/
+2. Run `go test`
+3. Run `go test -v` for more info
+
+Automated Testing: licensechk
+-----------------------------
+1. Navigate to .../licensechk/
+2. Run `go test`
+3. Run `go test -v` for more info
+
+Automated Testing: linefmtchk
+-----------------------------
+
+Automated Testing: utf8chk
+--------------------------
