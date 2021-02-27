@@ -36,41 +36,43 @@ func (lfc *LineFmtChecker) Validate() bool {
 	//step through each entry in lfc.Path directory
 	for _, fi := range files {
 		filePath = lfc.Path + string(os.PathSeparator) + fi.Name()
-		lfc.msg += `Checking: ` + filePath + "\n"
+		if !strings.Contains(filePath, ".git") {
+			lfc.msg += `Checking: ` + filePath + "\n"
 
-		if fi.IsDir() { //validate subdirectories
-			tmpPath = lfc.Path
-			lfc.Path += string(os.PathSeparator) + fi.Name()
-			if !lfc.Validate() {
-				status = false
+			if fi.IsDir() { //validate subdirectories
+				tmpPath = lfc.Path
+				lfc.Path += string(os.PathSeparator) + fi.Name()
+				if !lfc.Validate() {
+					status = false
+				}
+				lfc.Path = tmpPath
+				continue
+			} else if strings.EqualFold(fi.Name(), `val.exe`) {
+				continue //skip executable
 			}
-			lfc.Path = tmpPath
-			continue
-		} else if strings.EqualFold(fi.Name(), `val.exe`) {
-			continue //skip executable
-		}
 
-		//open file
-		content, err := ioutil.ReadFile(filePath)
-		if err != nil {
-			lfc.msg += `Failed to open file: ` + filePath + "\n"
-			return false
-		}
-
-		//check the content of each line
-		lines = strings.Split(string(content), "\n")
-		for lineNum, line := range lines {
-			if lineExpr.MatchString(line) { //match against `\r` EOL character
-				lfc.issues += fmt.Sprintf("Issue: %s has wrong line feeds (line %d)\n", filePath,
-					lineNum+1)
-			} else if spaceExpr.MatchString(line) { //match against space indentation
-				lfc.issues += fmt.Sprintf("Issue: %s has space-indentation (line %d)\n", filePath,
-					lineNum+1)
-			} else {
-				continue //file pass
+			//open file
+			content, err := ioutil.ReadFile(filePath)
+			if err != nil {
+				lfc.msg += `Failed to open file: ` + filePath + "\n"
+				return false
 			}
-			lfc.issueCt++
-			status = false //file fail
+
+			//check the content of each line
+			lines = strings.Split(string(content), "\n")
+			for lineNum, line := range lines {
+				if lineExpr.MatchString(line) { //match against `\r` EOL character
+					lfc.issues += fmt.Sprintf("Issue: %s has wrong line feeds (line %d)\n", filePath,
+						lineNum+1)
+				} else if spaceExpr.MatchString(line) { //match against space indentation
+					lfc.issues += fmt.Sprintf("Issue: %s has space-indentation (line %d)\n", filePath,
+						lineNum+1)
+				} else {
+					continue //file pass
+				}
+				lfc.issueCt++
+				status = false //file fail
+			}
 		}
 	}
 	return status
