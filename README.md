@@ -1,13 +1,16 @@
 INFORMATIONAL
 =============
-Author: Rich Goluszka  
-Last Updated: 2/16/2021  
-Project: Coding Standards Validator - Part 1  
+Author: Brennan Price, Kurt Dankovich, Maria Rodriguez Del Corral
+Last Updated: 2/28/2021  
+Project: Coding Standards Validator - Part 2  
 Course: Applied Programming Languages (CPSC360-1) with Professor Eric Pogue  
 
 Contact
 -------
-Please direct any and all comments/concerns/inquiries to richardjgoluszka@lewisu.edu
+Please direct any and all comments/concerns/inquiries to 
+brennanjprice@lewisu.edu
+kurt
+maria
 
 ORIGINALITY
 ===========
@@ -17,7 +20,10 @@ Credit to Chapter 8 of _Introducing Go_ by Caleb Doxsey for the code structure t
 Credit to [Open Source Initiative](opensource.org/licenses/MIT) for the standard contents of an 
 	MIT License.
 
-All other code is the original work of the author and may be used in accordance with the 
+Credit to Rich Goluszka for the base code of the validator that he shared with the rest of the class, 
+including the checking packages and main validator.
+
+All other code is the original work of the authors and may be used in accordance with the 
 	specifications laid out in the LICENSE file.
 
 BUILD / EXECUTE / DEPENDENCY
@@ -35,7 +41,7 @@ coding-standards-validator-part-1
 	-utf8chk directory  
 		-utf8Check.go  
 
-_Note: The GitHub repository https://github.com/RichGol/360-richard-goluszka contains all_  
+_Note: The GitHub repository https://github.com/BrennanP01/360-gloriousKenobis contains all_  
 _required files plus README.md and LICENSE files. This repository is private and you will *NOT*_  
 _be able to access it if you are not an invited collaborator._
 
@@ -43,7 +49,8 @@ Build instructions
 ------------------
 To compile an executable:
 1. Open the command-line or terminal
-2. Navigate to .../go/src/360-richard-goluszka/sprint-2/coding-standards-validator-part-1
+2. Navigate to the folder you wish to install the application into
+3. Run `git clone https://github.com/BrennanP01/360-gloriousKenobis`
 3. Run `go install` within each subdirectory (directorychk / licensechk / linefmtchk / utf8chk)
 4. Run `go build` within the val subdirectory (.../coding-standards-validator-part-1/val)
 You should now have a `val.exe` executable to call in order to run the program
@@ -54,3 +61,42 @@ Execution instructions
 2. Run val.exe and specify path to project when prompted
 3. Optionally use `val.exe detail` to view detailed validation information
 4. Optionally use `val.exe help` to view help instructions
+
+Test-00
+-------
+1. Navigate to .../360-gloriousKenobis
+2. Run /val/val.go
+3. Enter `.` as the file path
+4. All tests should pass
+
+Successfully run and tested - Brennan
+
+Test-01
+-------
+1. Navigate to .../360-gloriousKenobis
+2. Run /val/val.go
+3. Enter `./test-01` as the file path
+4. All tests should pass
+
+Successfully run and tested - Brennan
+
+Test-00
+-------
+1. Navigate to .../360-gloriousKenobis
+2. Run /val/val.go
+3. Enter `./test-02` as the file path
+4. All tests should fail, several times
+
+Test-00
+-------
+1. Navigate to .../360-gloriousKenobis
+2. Run /val/val.go
+3. Enter `./test-03` as the file path
+4. One test should fail
+
+Test-00
+-------
+1. Navigate to .../360-gloriousKenobis
+2. Run /val/val.go
+3. Enter `./test-04` as the file path
+4. One test should succeed
