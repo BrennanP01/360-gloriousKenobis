@@ -32,34 +32,36 @@ func (uc *UTF8Checker) Validate() bool {
 	//step through each entry in uc.Path directory
 	for _, fi := range files {
 		filePath = uc.Path + string(os.PathSeparator) + fi.Name()
-		uc.msg += `Checking: ` + filePath + "\n"
+		if !strings.Contains(filePath, ".git") {
+			uc.msg += `Checking: ` + filePath + "\n"
 
-		if fi.IsDir() { //validate subdirectories
-			tmpPath = uc.Path
-			uc.Path += string(os.PathSeparator) + fi.Name()
-			if !uc.Validate() {
-				status = false
+			if fi.IsDir() { //validate subdirectories
+				tmpPath = uc.Path
+				uc.Path += string(os.PathSeparator) + fi.Name()
+				if !uc.Validate() {
+					status = false
+				}
+				uc.Path = tmpPath
+				continue
+			} else if strings.EqualFold(fi.Name(), `val.exe`) {
+				continue //skip executable
 			}
-			uc.Path = tmpPath
-			continue
-		} else if strings.EqualFold(fi.Name(), `val.exe`) {
-			continue //skip executable
-		}
 
-		//open file
-		content, err := ioutil.ReadFile(filePath)
-		if err != nil {
-			uc.msg += `Failed to open file: ` + filePath + "\n"
-			return false
-		}
+			//open file
+			content, err := ioutil.ReadFile(filePath)
+			if err != nil {
+				uc.msg += `Failed to open file: ` + filePath + "\n"
+				return false
+			}
 
-		//Check each line for UTF-8 validity
-		lines = strings.Split(string(content), "\n")
-		for lineNum, line := range lines {
-			if !utf8.ValidString(line) {
-				uc.issues += fmt.Sprintf("Line %d in File: %s\tnon-utf8 text\n", lineNum, line)
-				uc.issueCt++
-				status = false //file fail
+			//Check each line for UTF-8 validity
+			lines = strings.Split(string(content), "\n")
+			for lineNum, line := range lines {
+				if !utf8.ValidString(line) {
+					uc.issues += fmt.Sprintf("Line %d in File: %s\tnon-utf8 text\n", lineNum, line)
+					uc.issueCt++
+					status = false //file fail
+				}
 			}
 		}
 	}
