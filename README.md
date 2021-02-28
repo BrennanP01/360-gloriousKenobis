@@ -80,12 +80,14 @@ Test-01
 
 Successfully run and tested - Brennan
 
-Test-00
+Test-02
 -------
 1. Navigate to .../360-gloriousKenobis
 2. Run /val/val.go
-3. Enter `./test-02` as the file path
+3. Enter `../test-02` as the file path
 4. All tests should fail, several times
+
+Successfully run and tested - Maria
 
 Test-00
 -------
