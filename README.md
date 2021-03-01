@@ -95,6 +95,7 @@ Test-03
 2. Run /val/val.go
 3. Enter `./test-03` as the file path
 4. One test should fail
+ Successfully run and tested - Kurt
 
 Test-04
 -------
@@ -102,6 +103,7 @@ Test-04
 2. Run /val/val.go
 3. Enter `./test-04` as the file path
 4. One test should succeed
+  Successfully run and tested - Kurt
 
 Automated Testing: directorychk
 -------------------------------
