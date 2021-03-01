@@ -1,0 +1,175 @@
+﻿/********************************************************************************
+* This file is used to verify that all the coding standard rules fail:          *
+* 	It is not an UTF-8 encoded file                                         *
+*	It uses the Windows style for end of line (carriage return + linefeed)  *
+*	Some lines are indented using tabs                                      *
+*	Lines has no more than 100 characters                                   *
+********************************************************************************/
+package main
+
+import (
+    "fmt"
+    "flag"
+    "io/ioutil"
+    "os"
+    "path/filepath"
+    "strings"
+    "funcs"
+    "indent"
+    "lf"
+    "utfenc"
+    "wrap"
+)
+
+// Interface to abstract the implementation of the different validation rules.
+// Thanks to this interface we polymorphically call the different rules 
+// using same call with same parameters.
+type Rule interface {
+	CheckRule ()
+}
+
+type output struct {
+	totalLineLength	int				// Number of maximum characters per line failed
+	totalTabIndent int				// Number of indent tests failed
+	totalLfEnd int					// Number of line feed tests failed
+	totalUtfEncoded int				// Number of utf-8 tests failed
+}
+
+func main() {
+	var detailOutput bool
+	var fileName string
+	var lineLenght int
+	var fileApp bool
+	var lenPath int
+	var exeIndex int
+
+	// Retrieve command line flags
+	detailFlag := flag.Bool ("detail", false, "detailed output")
+	dFlag := flag.Bool ("d", false, "detailed output")
+	fileFlag := flag.String ("file", "", "file name")
+	fFlag := flag.String ("f", "", "file name")
+	helpFlag := flag.Bool ("help", false, "usage")
+	hFlag := flag.Bool ("h", false, "usage")
+    maxFlag := flag.Int ("max", 100, "line lenght")
+    mFlag := flag.Int ("m", 100, "usage")
+    flag.Parse()
+
+	// Manage the different defined flags
+    if *helpFlag || *hFlag {
+		funcs.UsageInstructions ()
+		return
+    }
+	
+	if *detailFlag || *dFlag {
+		detailOutput = true
+	} else {
+		detailOutput = false
+	}
+	
+	if *maxFlag != 100 || *mFlag != 100 {
+		if *maxFlag != 100 {
+			lineLenght = *maxFlag
+		} else {
+			lineLenght = *mFlag
+		}
+	} else {
+		lineLenght = *maxFlag
+	}
+	
+	outResults := output {0, 0, 0, 0}
+	// Only one file to manage
+	if *fileFlag != "" || *fFlag != "" {
+		if *fileFlag != "" {
+			fileName = *fileFlag
+		} else {
+			fileName = *fFlag
+		}
+		manageFile (fileName, detailOutput, lineLenght, &outResults)
+
+	// Recursively checks files starting on the current folder
+	} else {
+
+		walkError := filepath.Walk(fileName,func(filePath string, info os.FileInfo, funcError error) error {
+				if funcError != nil {
+					return funcError
+				}
+				lenPath = len (filePath)
+				exeIndex = strings.Index (filePath, ".exe")
+				if (lenPath - exeIndex == 4) {
+					fileApp = true
+				} else {
+					fileApp = false
+				}
+				// If the file is neither a directory nor an executable (in windows)
+				if !info.IsDir() && !fileApp {
+					manageFile (filePath, detailOutput, lineLenght, &outResults)
+				}
+				return nil
+			})
+		if walkError != nil {
+			fmt.Println(walkError)
+		}
+	}
+	// Final summary
+	fmt.Printf ("\n\t****************************************************\n")
+	fmt.Printf ("\t*\t\t\t\t\t\t   *\n\t*\t\tS U M M A R Y\t\t\t   *\n\t*\t\t=============\t\t\t*\n*\t\t\t\t\t\t\t   *\n")
+	fmt.Printf ("\t*\t# of files with long lines\t %3d\t   *\n", outResults.totalLineLength)
+	fmt.Printf ("\t*\t# of files indented with spaces\t %3d\t   *\n", outResults.totalTabIndent)
+	fmt.Printf ("\t*\t# of files with end lines CR+LF\t %3d\t   *\n", outResults.totalLfEnd)
+	fmt.Printf ("\t*\t# of files not UTF-8 encoded\t %3d\t   *\n", outResults.totalUtfEncoded)
+	fmt.Printf ("\t*\t\t\t\t\t\t   *\n")
+	fmt.Printf ("\t****************************************************\n")
+}
+
+// Function to manage all the rules using a common interface
+func ValidateRule (r Rule) {
+	r.CheckRule ()
+	return
+}
+
+/*******************************************************************************************************************
+* This function carries out all the tasks associated to the rule management for a specific file. Input parameters: * 
+*     filePath: String with the full path of this file (starting on the current folder                             *
+*     detailOutput: Boolean to select detailed or bried output listing                                             *
+*     maxLength: Maximum number of characters per line                                                             *
+*******************************************************************************************************************/
+func manageFile (filePath string, detailOutput bool, maxLength int, outResults *output) {
+
+	fmt.Printf ("\n Checking rules on file %s ...\n", filePath)
+	fmt.Printf ("=========================================================\n")
+	// Read the whole file and put it in an array of bytes
+	buffFile, fileError := ioutil.ReadFile (filePath)
+	if fileError != nil {
+		// Handle the error here
+		fmt.Println(fileError)
+	} else {
+		buffLen := len (buffFile)
+
+		// Create references to the data structure of each rule
+		lineLength := &wrap.LineLength {MaxCharLine: maxLength, FileContent: buffFile, NumBytes: buffLen, Detail: detailOutput }
+
+		tabIndent := &indent.TabIndent {FileContent: buffFile, NumBytes: buffLen,Detail: detailOutput }
+
+		lfEnd := &lf.LfEnd {FileContent: buffFile, NumBytes: buffLen, Detail: detailOutput }
+
+		utfEncoded := &utfenc.UtfEncoded {FileName: filePath, Detail: detailOutput }
+
+		// Call the function to validate the different rules
+		ValidateRule (lineLength)
+		if !lineLength.TestPassed {
+			(*outResults).totalLineLength++
+		}
+		ValidateRule (tabIndent)
+		if !tabIndent.TestPassed {
+			(*outResults).totalTabIndent++
+		}
+		ValidateRule (lfEnd)
+		if !lfEnd.TestPassed {
+			(*outResults).totalLfEnd++
+		}
+		ValidateRule (utfEncoded)
+		if !utfEncoded.TestPassed {
+			(*outResults).totalUtfEncoded++
+		}
+	}
+}
