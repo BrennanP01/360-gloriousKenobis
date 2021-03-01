@@ -89,14 +89,14 @@ Test-02
 
 Successfully run and tested - Maria
 
-Test-00
+Test-03
 -------
 1. Navigate to .../360-gloriousKenobis
 2. Run /val/val.go
 3. Enter `./test-03` as the file path
 4. One test should fail
 
-Test-00
+Test-04
 -------
 1. Navigate to .../360-gloriousKenobis
 2. Run /val/val.go
