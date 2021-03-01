@@ -119,6 +119,12 @@ Automated Testing: licensechk
 
 Automated Testing: linefmtchk
 -----------------------------
+1. Navigate to .../linefmtchk/
+2. Run `go test`
+3. Run `go test -v` for more info
 
 Automated Testing: utf8chk
 --------------------------
+1. Navigate to .../utf8chk/
+2. Run `go test`
+3. Run `go test -v` for more info
