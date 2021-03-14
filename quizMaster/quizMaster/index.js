@@ -5,24 +5,26 @@ const url = require('url');
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
     
-    let nameList = []
-    if(req.query.name){
-        nameList = req.query.name.split(",");
+    let idList = []
+    if(req.query.id){
+        idList = req.query.id.split(",");
     } else {
-        nameList.push("Bob");
+        idList.push("Bob");
     }
 
-    let ageList = []
-    if(req.query.age){
-        ageList = req.query.age.split(",");
+    let amountList = []
+    if(req.query.amount){
+        amountList = req.query.amount.split(",");
+        for(var i=0; i < idList.length; i++){
+            amountList[i] = Number(amountList[i]);
+        }
     } else {
-        ageList.push("15");
+        amountList.push(0);
     }
 
-    console.log(typeof nameList);
     var responseMessage = ""
-    for(var i = 0; i < nameList.length; i++){
-        responseMessage = responseMessage + "Hello, " + nameList[i] + ". You are " + ageList[i] + " years old. This HTTP triggered function executed successfully." + "\n";
+    for(var i = 0; i < idList.length; i++){
+        responseMessage = responseMessage + "Question Bank " + idList[i] + " requests " + amountList[i] + " questions." + "\n";
     }
     context.res = {
         // status: 200, /* Defaults to 200 */
