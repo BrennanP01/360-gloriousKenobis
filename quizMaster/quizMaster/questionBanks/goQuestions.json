@@ -1,0 +1,51 @@
+[
+    {
+        "title":"What year was go released?",
+        "choices":[
+            "1997",
+            "2004",
+            "2009",
+            "2014"
+        ],
+        "correctAnswer":"2009"
+    },
+    {
+        "title":"How would you initialize a variable?",
+        "choices":[
+            "x = 5",
+            "int x = 5",
+            "set x to 5",
+            "x := 5"
+        ],
+        "correctAnswer":"x := 5"
+    },
+    {
+        "title":"What website would you go to to download go?",
+        "choices":[
+            "programmers.com",
+            "golang.org",
+            "go.net",
+            "downloadgohere.com"
+        ],
+        "correctAnswer":"golang.org"
+    },
+    {
+        "title":"Does go support Inheritance?",
+        "choices":[
+            "Yes, with no issues",
+            "No, but there are ways to implement it",
+            "No, not at all"
+        ],
+        "correctAnswer":"No, but there are ways to implement it"
+    },
+    {
+        "title":"What company helped to develop go?",
+        "choices":[
+            "Google",
+            "Amazon",
+            "Apple",
+            "None, its completely open source"
+        ],
+        "correctAnswer":"Google"
+    }
+]

@@ -1,0 +1,50 @@
+[
+    {
+        "title":"How are you feeling today?",
+        "choices":[
+            "Good",
+            "Ok",
+            "Fine",
+            "Bad"
+        ],
+        "correctAnswer":"Good"
+    },
+    {
+        "title":"Do you enjoy this class?",
+        "choices":[
+            "Yes",
+            "Yes",
+            "Yes",
+            "Yes"
+        ],
+        "correctAnswer":"Yes"
+    },
+    {
+        "title":"Which answer is correct?",
+        "choices":[
+            "That one",
+            "This one",
+            "The other one",
+            "You know which one"
+        ],
+        "correctAnswer":"This one"
+    },
+    {
+        "title":"Yes?",
+        "choices":[
+            "Yes",
+            "No"
+        ],
+        "correctAnswer":"Yes"
+    },
+    {
+        "title":"Find x: 5 = 5x -5",
+        "choices":[
+            "1",
+            "2",
+            "3",
+            "4"
+        ],
+        "correctAnswer":"2"
+    }
+]

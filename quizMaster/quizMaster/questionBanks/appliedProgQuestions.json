@@ -1,0 +1,52 @@
+[
+    {
+        "title":"What Class is this?",
+        "choices":[
+            "Software Engineering",
+            "Pen testing",
+            "Art",
+            "Applied Programming"
+        ],
+        "correctAnswer":"Applied Programming"
+    },
+    {
+        "title":"When does class start?",
+        "choices":[
+            "1:00",
+            "2:00",
+            "12:30",
+            "1:45"
+        ],
+        "correctAnswer":"12:30"
+    },
+    {
+        "title":"What School do we go to?",
+        "choices":[
+            "Lewis",
+            "U of I",
+            "UIC",
+            "Harvard"
+        ],
+        "correctAnswer":"Lewis"
+    },
+    {
+        "title":"When is stuff due?",
+        "choices":[
+            "Sunday",
+            "Monday",
+            "Friday",
+            "Tuesday"
+        ],
+        "correctAnswer":"Sunday"
+    },
+    {
+        "title":"What sprint is this?",
+        "choices":[
+            "1",
+            "2",
+            "3",
+            "4"
+        ],
+        "correctAnswer":"4"
+    }
+]
