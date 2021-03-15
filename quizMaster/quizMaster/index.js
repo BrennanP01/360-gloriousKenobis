@@ -51,7 +51,6 @@ module.exports = async function (context, req) {
         for(bank in questionBankInfo){
             bankPath = questionBankInfo[bank][3];
             qBank = JSON.parse(fs.readFileSync(__dirname + "/" + bankPath));
-            //get id location in requestline
             var index = idList.indexOf(qBank.ID);
             let questionLocation = [];
             for(i = 0; i < amountList[index]; i++){
@@ -70,19 +69,38 @@ module.exports = async function (context, req) {
             };
             index = 0;
             for(randomNum in questionLocation){
-                chosen.Questions.push(qBank.Questions[questionLocation[randomNum]]); //get the question and put it in chosen at the index
+                let randomQuestion = qBank.Questions[questionLocation[randomNum]];
+                delete randomQuestion["correctAnswer"];
+                
+                //randomize possible answer order
+                let choices = [];
+                for(i=0;i<randomQuestion["choices"].length;i++){
+                    choices.push(randomQuestion["choices"][i]);
+                }
+                let randomizedChoicesIndex = [];
+                for(i=0;i < choices.length;i++){
+                    cLoc = Math.floor(Math.random() * Math.floor(choices.length));
+                    if(randomizedChoicesIndex.includes(cLoc)){
+                        i--;
+                    } else {
+                        randomizedChoicesIndex.push(cLoc);
+                    }
+                }
+                let randomizedChoices = [];
+                for(i=0;i<randomizedChoicesIndex.length;i++){
+                    randomizedChoices.push(randomQuestion["choices"][randomizedChoicesIndex[i]]);
+                }
+                console.log(choices);
+                console.log(randomizedChoices);
+                console.log(randomizedChoicesIndex);
+                randomQuestion.choices = randomizedChoices;
+
+                
+                chosen.Questions.push(randomQuestion); //get the question and put it in chosen at the index
                 index++;
             }
             quiz.push(chosen);
-            //choose questions from those numbers
-            //add stringified questions to the Chosen
-            //add chosen to quiz
-            
         }
-
-        // for(var i = 0; i < idList.length; i++){
-        //     responseMessage = responseMessage + "Question Bank " + idList[i] + " requests " + amountList[i] + " questions." + "\n";
-        // }
         responseMessage = JSON.stringify(quiz);
     }
 
