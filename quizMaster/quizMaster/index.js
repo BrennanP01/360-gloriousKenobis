@@ -90,9 +90,7 @@ module.exports = async function (context, req) {
                 for(i=0;i<randomizedChoicesIndex.length;i++){
                     randomizedChoices.push(randomQuestion["choices"][randomizedChoicesIndex[i]]);
                 }
-                console.log(choices);
-                console.log(randomizedChoices);
-                console.log(randomizedChoicesIndex);
+                
                 randomQuestion.choices = randomizedChoices;
 
                 
