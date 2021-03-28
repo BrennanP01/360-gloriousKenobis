@@ -1,0 +1,4 @@
+http://localhost:7071/api/quizMaster?goal=info
+http://localhost:7071/api/quizMaster?goal=quiz&id=00&amount=2&id=01&amount=5&id=02&amount=4
+
+

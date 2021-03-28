@@ -1,7 +1,7 @@
 {
     "questionBanks":{
-    "appliedProg":"questionBanks/appliedProgQuestions.json",
-    "go":"questionBanks/goQuestions.json",
-    "meta":"questionBanks/metaQuestions.json"
+        "appliedProg":"questionBanks/appliedProgQuestions.json",
+        "go":"questionBanks/goQuestions.json",
+        "meta":"questionBanks/metaQuestions.json"
     }
 }
