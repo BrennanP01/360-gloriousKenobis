@@ -1,0 +1,49 @@
+* {
+    box-sizing: border-box;
+  }
+  /* Style the body */
+  .header {
+    padding: 24px;
+    text-align: center;
+    background: #00BFFF;
+    color: white;
+  }
+  
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+  }
+  h2 {
+      text-align: center;
+          }
+  h3 {
+      text-align: center;
+          }
+  .dice { 
+      text-align: center; 
+      display: inline-block; 
+      margin: 10px; 
+          } 
+          
+  .container { 
+      width: 70%; 
+      margin: auto; 
+      text-align: center; 
+          } 
+  .bottom { 
+      padding-top: 30px; 
+          } 
+  .butn { 
+      background: blue; 
+      font-family: "Times New Roman", cursive; 
+      border-radius: 7px; 
+      color: #00BFFF; 
+      font-size: 30px; 
+      padding: 16px 25px 16px 25px; 
+      text-decoration: none; 
+          } 
+    
+  .butn:hover { 
+      background: yellow; 
+      text-decoration: none; 
+          } 
