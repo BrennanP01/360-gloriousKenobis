@@ -1,42 +1,62 @@
-INFORMATIONAL
-=============
-Author: Brennan Price, Kurt Dankovich, Maria Rodriguez Del Corral
-Last Updated: 2/28/2021  
-Project: Coding Standards Validator - Part 2  
-Course: Applied Programming Languages (CPSC360-1) with Professor Eric Pogue  
 
-Contact
--------
-Please direct any and all comments/concerns/inquiries to 
-brennanjprice@lewisu.edu
-kurt
-maria
+Mosaic 1.00
+---------------
 
-ORIGINALITY
-===========
+Mosaic Copyright (C) 2021
+Maria Rodriguez
+Lewis University
+mariavictoriavrod@lewisu.edu
 
-Credit to [Open Source Initiative](opensource.org/licenses/MIT) for the standard contents of an 
-	MIT License.
+Mosaic is free software distributed under the GNU LGPL. 
+Read LICENSE for more information about license.
 
-All other code is the original work of the authors and may be used in accordance with the 
-	specifications laid out in the LICENSE file.
+The web page containts three sections:
+	A header
+	A body where the mosaic is built
+	A footer with a button to redo the mosaic every time is clicked
+The application has been developed in React js and based on Azure Static Web App resource 
+linked with a Github repository. It is an example of continuous integration and continuous
+deployment (CI/CD) so, every time the Github repository is updated, automatically the
+process of deployment in Azure Static Web App is launched and the new deployment is also
+automatically accessible using the application's public url.
 
-BUILD / EXECUTE / DEPENDENCY
-============================
-Required files
---------------
- 
 
-_Note: The GitHub repository https://github.com/BrennanP01/360-gloriousKenobis contains all_  
-_required files plus README.md and LICENSE files. This repository is private and you will *NOT*_  
-_be able to access it if you are not an invited collaborator._
+Usage:
+	In order to access the application, launch your preferred web browser and access to the
+	initial page. 
+	In test environment: http://localhost:3000
+	In production: https://mango-tree-009989910.azurestaticapps.net/
+	A 12x12 mosaic of squares and circles (random) with random background color and a 
+	random character between A and Z with a random color will appear.
+	There is a Randomize! button in the footer. Everytime this button is clicked, the
+	12x12 mosaic is updated with new shapes, colors and characters.
+	Clicking in a shape will replace the character by an image. The rest of the mosaic
+	remains unaltered. Clicking again in the shape with the image, will recover the
+	original character and its color.
+	The mosaic keeps its look and feel when the browser's window is resized
+	(mosaic is not recalculated and it keeps proportions in squares, circles and characters)
 
-Build instructions
-------------------
-To compile an executable:
-1. Open the command-line or terminal
-2. Navigate to the folder you wish to install the application into
-3. Run `git clone https://github.com/BrennanP01/360-gloriousKenobis`
+Among some files generated automatically by the emplate building the project 
+(json files, files in public folder...), the distribution package contains:
 
-Execution instructions
-----------------------
+	README.md					- This file
+	LICENSE						- License terms
+	src/index.js				- Index React file
+	src/index.css
+	src/App.js					- Business logic
+	src/App.css					- Application format
+	src/Functions.js			- Auxiliary javascript functions
+	src/facedraw.png			- Image used in the application
+		
+Installation
+	The application is hosted in Azure Web Static App. 
+	To access it, enter the following URL in a browser:
+	https://proud-glacier-05f8a4210.azurestaticapps.net
+			
+---
+Acknowledge:
+Contrast algorithm found in:
+https://www.w3.org/TR/2008/REC-WCAG20-20081211/
+
+
+End of document
