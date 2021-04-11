@@ -36,7 +36,7 @@ Usage:
 	The mosaic keeps its look and feel when the browser's window is resized
 	(mosaic is not recalculated and it keeps proportions in squares, circles and characters)
 
-Among some files generated automatically by the emplate building the project 
+Among some files generated automatically by the template building the project 
 (json files, files in public folder...), the distribution package contains:
 
 	README.md					- This file
