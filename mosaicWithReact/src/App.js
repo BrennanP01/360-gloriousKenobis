@@ -115,9 +115,7 @@ class Shape extends Component {
 	* again, recovers the character associated to the shape    *
 	* Shape and colors are not updated                         *
 	***********************************************************/
-/*	clickShape = () => { */
 	clickShape () {
-/*		console.log (this.refButton);*/
 		if (this.refButton.current.innerText === "") {
 			this.refButton.current.innerHTML = this.innerHTML;
 		} else {
