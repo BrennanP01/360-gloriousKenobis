@@ -1,0 +1,173 @@
+/*
+.App {
+	text-align: center;
+}
+
+.App-logo {
+	height: 40vmin;
+	pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.App-logo {
+		animation: App-logo-spin infinite 20s linear;
+	}
+}
+
+.App-header {
+	background-color: #282c34;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: calc(10px + 2vmin);
+	color: white;
+}
+
+.App-link {
+	color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+*/
+.base {
+	width: 86vmin;
+	height: 95vmin;
+	border: 2px solid grey;
+	background-color: #111111;
+	margin-top: 2vmin;
+	margin-left: 2vmin;
+	margin-bottom: 2vmin;
+}
+
+.header {
+	width: 100%;
+	height: 2.2%;
+	background-color: #43AABB;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+}
+
+.mosaic {
+	width: 100%;
+	height: 89.7%;
+	border: 0.5% solid grey;
+	background-color: #dddddd;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+}
+
+.footer {
+	width: 100%;
+	height: 8%;
+	background-color: #aaaaaa;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+}
+
+.randbutton {
+	width: 20%;
+	height: 70%;
+	border: 2px solid grey;
+	background-color: lightgrey;
+	color: black;
+	text-align: center;
+/*	font-size: 80%;*/
+	font-size: 2.5vmin;
+	font-weight: bold;
+	margin-left: 10%;
+	margin-top: 1.5%;
+	margin-bottom: 1.5%;
+	margin-right: 5%;
+	padding: 1%;
+}
+
+/* Square button */
+.shape0 {
+	border: 0vmin;
+	margin-left: 0vmin;
+	margin-right: 0vmin;
+	margin-top: 0vmin;
+	margin-bottom: 0vmin;
+	padding: 0vmin;
+	font-weight: bold;
+	text-align: center;
+}
+
+/* Circle button */
+.shape1 {
+	border: 0vmin;
+	border-radius: 50%;
+	justify-content: center;
+	text-align: center;
+	margin-left: 0vmin;
+	margin-right: 0vmin;
+	margin-top: 0vmin;
+	margin-bottom: 0vmin;
+	padding: 0vmin;
+	font-weight: bold;
+}
+
+.shape2 {
+	border: 0vmin;
+	border-radius: 25%;
+	justify-content: center;
+	text-align: center;
+	margin-left: 0vmin;
+	margin-right: 0vmin;
+	margin-top: 0vmin;
+	margin-bottom: 0vmin;
+	padding: 0vmin;
+	font-weight: bold;
+}
+
+.circle1 {
+	border: 0px;
+	width: 1.5%;
+	height: 50%;
+	border-radius: 50%;
+	background: red;
+	justify-content: center;
+	float: left;
+	text-align: center;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 0px;
+	padding: 0.8vmin;
+/*	font-size: 50%;*/
+	font-size: 1vmin;
+	font-weight: bold;
+	color: blue;
+}
+.image {
+	border: 0px;
+/*	width: 4.6vmin;*/
+	float: center;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+.counter {
+/*	background-color: #dddddd;*/
+	float: center;
+	margin-left: 1%;
+	padding-left: 2%;
+	padding-right: 2%;
+	padding-top: 0.8%;
+	padding-bottom: 1%;
+	font-size: 3vmin;
+	font-weight: bold;
+}
