@@ -93,6 +93,18 @@
 	padding: 1%;
 }
 
+.counter {
+/*	background-color: #dddddd;*/
+	float: center;
+	margin-left: 1%;
+	padding-left: 2%;
+	padding-right: 2%;
+	padding-top: 0.8%;
+	padding-bottom: 1%;
+	font-size: 3vmin;
+	font-weight: bold;
+}
+
 /* Square button */
 .shape0 {
 	border: 0vmin;
@@ -160,14 +172,9 @@
 	margin-bottom: 0px;
 }
 
-.counter {
-/*	background-color: #dddddd;*/
-	float: center;
-	margin-left: 1%;
-	padding-left: 2%;
-	padding-right: 2%;
-	padding-top: 0.8%;
-	padding-bottom: 1%;
-	font-size: 3vmin;
-	font-weight: bold;
+.centered {
+	margin: 0;
+	position: relative;
+	left: 50%;
+	transform: translate(-30%, 0%);
 }

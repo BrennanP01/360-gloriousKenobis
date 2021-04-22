@@ -84,7 +84,7 @@ export default function App () {
 * and the current timer value                                        *
 *********************************************************************/
 function Footer ({forceRandom}) {
-	const [startCount, SetStartCount] = useState(false);
+	const startCount = useState(true);
 	const [counter, SetCounter] = useState(60);
 	const [isPlaying, SetIsPlaying] = useState(false);
 	const countRef = useRef(counter);
@@ -100,7 +100,6 @@ function Footer ({forceRandom}) {
 			interval = setInterval(() => {
 				SetCounter (currCounter => currCounter - 1);
 				let currCounter = countRef.current;
-				//console.log('In setInterval', currCounter);
 				el.innerHTML = currCounter;
 			}, 1000);
 		} else {
@@ -109,28 +108,12 @@ function Footer ({forceRandom}) {
 		return () => clearInterval(interval);
 	}, [startCount]);
 
-	/**********************************************************************
-	* Function to manage the timer and the label of the start/stop button *
-	**********************************************************************/
-	const ManageCounter = () => {
-		const btn = document.getElementById('start_stop');
-		if (startCount) {
-			btn.innerHTML = 'Start Timer';
-		} else {
-			btn.innerHTML = 'Stop Timer';
-		}
-		SetStartCount(!startCount);
-	}
-
 	/*******************************************************************
 	* Function to reset the timer and prepare for next temporization   *
 	* Also, it launches a sound when the timer reach the value of zero *
 	*******************************************************************/
 	const ResetCounter = () => {
 		SetCounter(60);
-		SetStartCount(!startCount);
-		const btn = document.getElementById('start_stop');
-		btn.innerHTML = 'Start Timer';
 		forceRandom();
 	}
 
@@ -139,6 +122,7 @@ function Footer ({forceRandom}) {
 	***************************************************************/
 	const handleSongFinishedPlaying = () => {
 		SetIsPlaying(!isPlaying);
+		console.log(isPlaying);
 	}
 		
 	let currCounter = countRef.current;
@@ -153,28 +137,23 @@ function Footer ({forceRandom}) {
 	}
 	return (
 		<div className='footer'>
-			<button
-				id='randbutton'
-				className='randbutton'
-				onClick={() => forceRandom()}
-			>
-				Randomize!
-			</button>
-			<button
-				id='start_stop'
-				className='randbutton'
-				onClick={() => ManageCounter()}
-			>
-				Start Timer
-			</button>
-			<label className='count_label'>
-				Timer:
-			</label>
-			<label
-				id='counter'
-				className='counter'
-				style={{backgroundColor: backColor}}
-			>{counter}</label>
+			<div className='centered'>
+				<button
+					id='randbutton'
+					className='randbutton'
+					onClick={() => forceRandom()}
+				>
+					Randomize!
+				</button>
+				<label className='count_label'>
+					Timer:
+				</label>
+				<label
+					id='counter'
+					className='counter'
+					style={{backgroundColor: backColor}}
+				>{counter}</label>
+			</div>
 			<Sound
 				url = {soundToPlay}
 				playStatus = {isPlaying ? Sound.status.PLAYING : Sound.status.STOPPED}
