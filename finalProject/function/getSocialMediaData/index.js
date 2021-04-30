@@ -40,18 +40,17 @@ module.exports = async function (context, req) {
         responseMessage = "twitter";
         const twitterIdealTime = 9; // TODO find right time
         responseTime = calculateTime(twitterIdealTime, timezone);
-        responseHashes = getTwitterHashes(hashtag);
+        responseHashes = await getTwitterHashes(hashtag);
 
     }else{
         responseMessage = "Error: Unsupported Platform";
     }
-
     if(responseTime == null){
         responseMessage = "Error: Unsupported Timezone";
     }else{
         responseInfo.platform = platform;
         responseInfo.time = responseTime;
-        //responseInfo.hashtags = responseHashes;
+        responseInfo.hashtags = responseHashes;
         responseMessage = JSON.stringify(responseInfo);
     }
 
@@ -105,8 +104,8 @@ function getInstagramHashes(hashtag){
 async function getTwitterHashes(hashtag){
     var done = await queryTwitter(hashtag);
     var hashtags = fs.readFileSync("./hashtags.json",'utf8');
-    console.log("Read file");
     console.log(hashtags);
+    return JSON.parse(hashtags);
 }
 
 // makes the get request, then writes the data into a file
