@@ -3,11 +3,15 @@
 
 // package for twitter API
 var Twit = require('twit');
+var fs = require('fs');
 var config = require('./config');
 //?plat=twitter&hash=rainbow&time=cst
 
-
 module.exports = async function (context, req) {
+    fs.writeFile("./hashtags.json", "", function(err){
+        if (err) throw err;
+        console.log("Saved file");
+    });
     console.log("Starting");
     // inputs for the function
     const platform = req.query.plat;
@@ -98,49 +102,55 @@ function getInstagramHashes(hashtag){
             TWITTER
 ***********************************/
 //gets related hashtags from twitter
-function getTwitterHashes(hashtag){
+async function getTwitterHashes(hashtag){
+    var done = await queryTwitter(hashtag);
+    var hashtags = fs.readFileSync("./hashtags.json",'utf8');
+    console.log("Read file");
+    console.log(hashtags);
+}
+
+// makes the get request, then writes the data into a file
+function queryTwitter(hashtag){
     var T = new Twit(config);
     params = {
         q: "#" + hashtag + " -is:retweet",
         count: 50
     }
-    console.log("Paramaters:")
-    console.log(params);
-    T.get('search/tweets', params, onDataRecieved);
-    return "yep"
-}
-
-function onDataRecieved(err, data, response){
-    var hashtagOccurances = []
-    var tweets = data.statuses;
-    for(var i = 0; i < tweets.length; i++){
-        var hashtags = tweets[i].entities.hashtags;
-        for(var j = 0; j < hashtags.length; j++){
-            console.log(hashtags[j]);
-            var inArrayLocation = null;
-            var isInArray = false;
-            for(let k = 0; k < hashtagOccurances.length; k++){
-                var compareValOne = hashtagOccurances[k].hash;
-                var compareValTwo = hashtags[j].text;
-                if(hashtagOccurances[k].hash == hashtags[j].text){
-                    isInArray = true;
-                    inArrayLocation = k;
+    return new Promise((resolve, reject) =>{
+        T.get('search/tweets', params, function(err, data, response){
+            if (err) {
+                reject(err);
+            }
+            var hashtagOccurances = []
+            var tweets = data.statuses;
+            for(var i = 0; i < tweets.length; i++){
+                var hashtags = tweets[i].entities.hashtags;
+                for(var j = 0; j < hashtags.length; j++){
+                    var inArrayLocation = null;
+                    var isInArray = false;
+                    for(let k = 0; k < hashtagOccurances.length; k++){
+                        if(hashtagOccurances[k].hash == hashtags[j].text){
+                            isInArray = true;
+                            inArrayLocation = k;
+                        }
+                    }
+                    if(isInArray){
+                        let curVal = hashtagOccurances[inArrayLocation].occur
+                        hashtagOccurances[inArrayLocation].occur = curVal + 1;
+                        isInArray = false;
+                    }else{
+                        hashtagOccurances.push({
+                            hash: hashtags[j].text,
+                            occur: 1
+                        });
+                    }
                 }
             }
-            if(isInArray){
-                let curVal = hashtagOccurances[inArrayLocation].occur
-                hashtagOccurances[inArrayLocation].occur = curVal + 1;
-                isInArray = false;
-            }else{
-                hashtagOccurances.push({
-                    hash: hashtags[j].text,
-                    occur: 1
-                });
-            }
-        }
-    }
-    hashtagOccurances.sort(function(a,b){
-        return b.occur - a.occur;
+            hashtagOccurances.sort(function(a,b){
+                return b.occur - a.occur;
+            });
+            fs.writeFileSync("./hashtags.json", JSON.stringify(hashtagOccurances));
+            resolve(data);
+        });
     });
-    console.log(hashtagOccurances);
 }
