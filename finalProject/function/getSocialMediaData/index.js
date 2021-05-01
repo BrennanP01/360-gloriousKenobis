@@ -109,10 +109,14 @@ async function getTwitterHashes(hashtag, context, timezone){
 // makes the get request, then writes the data into a file
 function queryTwitter(hashtag, context, timezone){
     var T = new Twit(config);
+    // paramaters for the tweets to search
     params = {
         q: "#" + hashtag + " -is:retweet",
-        count: 50
+        count: 100,
+        lang: "en",
+        result_type: "mixed"
     }
+    // ensures the function runs synchronously
     return new Promise((resolve, reject) =>{
         T.get('search/tweets', params, function(err, data, response){
             if (err) {
@@ -126,11 +130,12 @@ function queryTwitter(hashtag, context, timezone){
                     var inArrayLocation = null;
                     var isInArray = false;
                     for(let k = 0; k < hashtagOccurances.length; k++){
-                        if(hashtagOccurances[k].hash == hashtags[j].text){
+                        if(hashtagOccurances[k].hashtag == hashtags[j].text){
                             isInArray = true;
                             inArrayLocation = k;
                         }
                     }
+                    // count number of times a hashtag appears
                     if(isInArray){
                         let curVal = hashtagOccurances[inArrayLocation].occur
                         hashtagOccurances[inArrayLocation].occur = curVal + 1;
@@ -143,6 +148,7 @@ function queryTwitter(hashtag, context, timezone){
                     }
                 }
             }
+            // sort the array from greatest to least
             hashtagOccurances.sort(function(a,b){
                 return b.occur - a.occur;
             });
@@ -161,6 +167,7 @@ function queryTwitter(hashtag, context, timezone){
     });
 }
 
+// writes to the blob storage file
 function writeToBlob(dataToWrite, context){
     context.bindings.outputBlob = dataToWrite;
 }
