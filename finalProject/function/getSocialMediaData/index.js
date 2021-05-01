@@ -17,12 +17,13 @@ const { google } = require('googleapis');
 var ytConfig = require('./ytconfig');
 //?plat=youtube&hash=rainbow&time=cst
 
+// package for 
 
 // initialize the response message
 var responseMessage = "";
 // initialize the response info object
 var responseInfo = {};
-responseTime = null;
+var responseTime = null;
 
 module.exports = async function (context, req) {
     console.log("Starting");
@@ -38,7 +39,7 @@ module.exports = async function (context, req) {
         responseTime = calculateTime(facebookIdealTime, timezone);
         //responseHashes = getFacebookHashes(hashtag);
     }else if(platform == 'youtube'){
-        responseHashes = await getyoutubeHashes(hashtag, timezone);
+        responseHashes = await getYoutubeHashes(hashtag, timezone, context);
     }else if(platform == 'twitter'){
         responseHashes = await getTwitterHashes(hashtag, context, timezone);
     }else{
@@ -52,7 +53,6 @@ module.exports = async function (context, req) {
     }
 
     context.res = {
-        // status: 200, /* Defaults to 200 */
         body: responseMessage
     };
 }
@@ -94,7 +94,7 @@ function getFacebookHashes(hashtag){
             YOUTUBE
 ***********************************/
 //gets related hashtags from youtube
-async function getyoutubeHashes(hashtag, timezone){
+async function getYoutubeHashes(hashtag, timezone, context){
     var hashtagOccurances = [];
     ytkey = ytConfig;
     console.log(ytkey);
@@ -137,6 +137,7 @@ async function getyoutubeHashes(hashtag, timezone){
     responseInfo.platform = "youtube";
     responseInfo.time = responseTime;
     responseInfo.hashtags = hashtagOccurances;
+    writeToBlob(responseInfo, context);
     console.log(responseInfo);
 }
 
