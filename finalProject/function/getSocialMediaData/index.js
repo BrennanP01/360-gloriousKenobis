@@ -1,5 +1,5 @@
 //https://sproutsocial.com/insights/best-times-to-post-on-social-media/
-// Source for best times to post on the different sites, based off of global engagement
+// Source for best times to post on twitter, based off of global engagement
 
 // packages for blob storage
 const { BlobServiceClient } = require('@azure/storage-blob');
@@ -7,15 +7,22 @@ var multipart = require('parse-multipart');
 const AZURE_STORAGE_CONNECTION_STRING = process.env["AZURE_STORAGE_CONNECTION_STRING"];
 
 // package for twitter API
-var Twit = require('twit');
+const Twit = require('twit');
 var fs = require('fs');
 var config = require('./config');
 //?plat=twitter&hash=rainbow&time=cst
+
+// package for youtube API
+const { google } = require('googleapis');
+var ytConfig = require('./ytconfig');
+//?plat=youtube&hash=rainbow&time=cst
+
 
 // initialize the response message
 var responseMessage = "";
 // initialize the response info object
 var responseInfo = {};
+responseTime = null;
 
 module.exports = async function (context, req) {
     console.log("Starting");
@@ -30,13 +37,8 @@ module.exports = async function (context, req) {
         const facebookIdealTime = 11; // TODO find right time
         responseTime = calculateTime(facebookIdealTime, timezone);
         //responseHashes = getFacebookHashes(hashtag);
-
-    }else if(platform == 'instagram'){
-        responseMessage = "instagram";
-        const instagramIdealTime = 15; // TODO find right time
-        responseTime = calculateTime(instagramIdealTime, timezone);
-        //responseHashes = getInstagramHashes(hashtag);
-
+    }else if(platform == 'youtube'){
+        responseHashes = await getyoutubeHashes(hashtag, timezone);
     }else if(platform == 'twitter'){
         responseHashes = await getTwitterHashes(hashtag, context, timezone);
     }else{
@@ -46,9 +48,6 @@ module.exports = async function (context, req) {
     if(responseTime == null){
         responseMessage = "Error: Unsupported Timezone";
     }else{
-        // responseInfo.platform = platform;
-        // responseInfo.time = responseTime;
-        // responseInfo.hashtags = responseHashes;
         responseMessage = JSON.stringify(responseInfo);
     }
 
@@ -78,20 +77,67 @@ function calculateTime(time, timeZone){
     }
 }
 
+
+// writes to the blob storage file
+function writeToBlob(dataToWrite, context){
+    context.bindings.outputBlob = dataToWrite;
+}
+
 /***********************************
             FACEBOOK
 ***********************************/
 //gets related hashtags from facebook
 function getFacebookHashes(hashtag){
-    posts = fetch()
 }
 
 /***********************************
-            INSTAGRAM
+            YOUTUBE
 ***********************************/
-//gets related hashtags from instagram
-function getInstagramHashes(hashtag){
-    
+//gets related hashtags from youtube
+async function getyoutubeHashes(hashtag, timezone){
+    var hashtagOccurances = [];
+    ytkey = ytConfig;
+    console.log(ytkey);
+    params = {
+        key: ytkey.key,
+        part: 'id,snippet',
+        q: hashtag,
+        maxResults: 100
+    }
+    var results = await google.youtube('v3').search.list(params);
+    results = results.data.items;
+    for(var i = 0; i < results.length; i++){
+        var description = results[i].snippet.description
+        var wordsInDescription = description.split(" ");
+        for(var j=0; j < wordsInDescription.length; j++){
+            if(wordsInDescription[j].includes("#")){
+                var inArrayLocation = null;
+                var isInArray = false;
+                for(var k = 0; k < hashtagOccurances.length; k++){
+                    if(hashtagOccurances[k] == wordsInDescription[j]){
+                        isInArray = true;
+                        inArrayLocation = k;
+                    }
+                }
+                if(isInArray){
+                    let curVal = hashtagOccurances[inArrayLocation].occur
+                    hashtagOccurances[inArrayLocation].occur = curVal + 1;
+                    isInArray = false;
+                }else{
+                    hashtagOccurances.push({
+                        hashtag: wordsInDescription[j],
+                        occur: 1
+                    });
+                }
+            }
+        }
+    }
+    const youtubeIdealTime = 14; // TODO find right time
+    responseTime = calculateTime(youtubeIdealTime, timezone);
+    responseInfo.platform = "youtube";
+    responseInfo.time = responseTime;
+    responseInfo.hashtags = hashtagOccurances;
+    console.log(responseInfo);
 }
 
 
@@ -101,9 +147,6 @@ function getInstagramHashes(hashtag){
 //gets related hashtags from twitter
 async function getTwitterHashes(hashtag, context, timezone){
     var done = await queryTwitter(hashtag, context, timezone);
-    // var hashtags = fs.readFileSync("./hashtags.json",'utf8');
-    // console.log(hashtags);
-    // return JSON.parse(hashtags);
 }
 
 // makes the get request, then writes the data into a file
@@ -167,7 +210,3 @@ function queryTwitter(hashtag, context, timezone){
     });
 }
 
-// writes to the blob storage file
-function writeToBlob(dataToWrite, context){
-    context.bindings.outputBlob = dataToWrite;
-}
