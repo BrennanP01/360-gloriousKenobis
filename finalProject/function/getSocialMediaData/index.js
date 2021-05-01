@@ -1,17 +1,23 @@
 //https://sproutsocial.com/insights/best-times-to-post-on-social-media/
 // Source for best times to post on the different sites, based off of global engagement
 
+// packages for blob storage
+const { BlobServiceClient } = require('@azure/storage-blob');
+var multipart = require('parse-multipart');
+const AZURE_STORAGE_CONNECTION_STRING = process.env["AZURE_STORAGE_CONNECTION_STRING"];
+
 // package for twitter API
 var Twit = require('twit');
 var fs = require('fs');
 var config = require('./config');
 //?plat=twitter&hash=rainbow&time=cst
 
+// initialize the response message
+var responseMessage = "";
+// initialize the response info object
+var responseInfo = {};
+
 module.exports = async function (context, req) {
-    fs.writeFile("./hashtags.json", "", function(err){
-        if (err) throw err;
-        console.log("Saved file");
-    });
     console.log("Starting");
     // inputs for the function
     const platform = req.query.plat;
@@ -19,11 +25,6 @@ module.exports = async function (context, req) {
     const timezone = req.query.time;
     //supported timezones are est, cst, mst, pst, akst, hst
 
-    // initialize the response message
-    var responseMessage = "";
-    // initialize the response info object
-    var responseInfo = {};
-    
     if(platform == 'facebook'){
         responseMessage = "facebook";
         const facebookIdealTime = 11; // TODO find right time
@@ -37,20 +38,17 @@ module.exports = async function (context, req) {
         //responseHashes = getInstagramHashes(hashtag);
 
     }else if(platform == 'twitter'){
-        responseMessage = "twitter";
-        const twitterIdealTime = 9; // TODO find right time
-        responseTime = calculateTime(twitterIdealTime, timezone);
-        responseHashes = await getTwitterHashes(hashtag);
-
+        responseHashes = await getTwitterHashes(hashtag, context, timezone);
     }else{
         responseMessage = "Error: Unsupported Platform";
     }
+
     if(responseTime == null){
         responseMessage = "Error: Unsupported Timezone";
     }else{
-        responseInfo.platform = platform;
-        responseInfo.time = responseTime;
-        responseInfo.hashtags = responseHashes;
+        // responseInfo.platform = platform;
+        // responseInfo.time = responseTime;
+        // responseInfo.hashtags = responseHashes;
         responseMessage = JSON.stringify(responseInfo);
     }
 
@@ -101,15 +99,15 @@ function getInstagramHashes(hashtag){
             TWITTER
 ***********************************/
 //gets related hashtags from twitter
-async function getTwitterHashes(hashtag){
-    var done = await queryTwitter(hashtag);
-    var hashtags = fs.readFileSync("./hashtags.json",'utf8');
-    console.log(hashtags);
-    return JSON.parse(hashtags);
+async function getTwitterHashes(hashtag, context, timezone){
+    var done = await queryTwitter(hashtag, context, timezone);
+    // var hashtags = fs.readFileSync("./hashtags.json",'utf8');
+    // console.log(hashtags);
+    // return JSON.parse(hashtags);
 }
 
 // makes the get request, then writes the data into a file
-function queryTwitter(hashtag){
+function queryTwitter(hashtag, context, timezone){
     var T = new Twit(config);
     params = {
         q: "#" + hashtag + " -is:retweet",
@@ -139,7 +137,7 @@ function queryTwitter(hashtag){
                         isInArray = false;
                     }else{
                         hashtagOccurances.push({
-                            hash: hashtags[j].text,
+                            hashtag: hashtags[j].text,
                             occur: 1
                         });
                     }
@@ -148,8 +146,21 @@ function queryTwitter(hashtag){
             hashtagOccurances.sort(function(a,b){
                 return b.occur - a.occur;
             });
-            fs.writeFileSync("./hashtags.json", JSON.stringify(hashtagOccurances));
+
+            //create the json object to write to the file
+            const twitterIdealTime = 9; // TODO find right time
+            responseTime = calculateTime(twitterIdealTime, timezone);
+            responseInfo.platform = "twitter";
+            responseInfo.time = responseTime;
+            responseInfo.hashtags = hashtagOccurances;
+            // Write to the file
+            // fs.writeFileSync("./hashtags.json", JSON.stringify(hashtagOccurances));
+            writeToBlob(responseInfo, context);
             resolve(data);
         });
     });
+}
+
+function writeToBlob(dataToWrite, context){
+    context.bindings.outputBlob = dataToWrite;
 }
