@@ -1,0 +1,294 @@
+
+
+Select the Information to Request
+=================================
+
+Select the Platform
+        0 - quit
+        1 - twitter
+        2 - youtube
+        3 - facebook
+Enter selected platform (0 to 3): 1
+Enter the message to search: rainbow
+Select timezone
+        0 - est
+        1 - cst
+        2 - mst
+        3 - pst
+        4 - akst
+        5 - hst
+Enter timezone (0 to 5): 1
+
+Information Returned from the Web Service
+=========================================
+
+        Platform twitter
+        Time 9
+                Hashtag OnAir
+                Occur 43
+
+                Hashtag rainbow
+                Occur 22
+
+                Hashtag radio
+                Occur 17
+
+                Hashtag etsy
+                Occur 12
+
+                Hashtag Rainbow
+                Occur 8
+
+                Hashtag safe
+                Occur 8
+
+                Hashtag nikkymakes
+                Occur 8
+
+                Hashtag rain
+                Occur 5
+
+                Hashtag Positive21
+                Occur 3
+
+                Hashtag handmade
+                Occur 3
+
+                Hashtag picture
+                Occur 3
+
+                Hashtag mashallah
+                Occur 3
+
+                Hashtag view
+                Occur 3
+
+                Hashtag afterrain
+                Occur 3
+
+                Hashtag HyderabadRains
+                Occur 3
+
+                Hashtag Hyderabad
+                Occur 3
+
+                Hashtag Telangana
+                Occur 3
+
+                Hashtag heavyrain
+                Occur 3
+
+                Hashtag Bisexualman
+                Occur 2
+
+                Hashtag Coloured
+                Occur 2
+
+                Hashtag PositiveTwenty1
+                Occur 2
+
+                Hashtag RainyDay
+                Occur 1
+
+                Hashtag marchmeetthemaker
+                Occur 1
+
+                Hashtag siege
+                Occur 1
+
+                Hashtag rainbowsixsiege
+                Occur 1
+
+                Hashtag siegememes
+                Occur 1
+
+                Hashtag gaming
+                Occur 1
+
+                Hashtag rainbowsix
+                Occur 1
+
+                Hashtag ubisoft
+                Occur 1
+
+                Hashtag Theme
+                Occur 1
+
+                Hashtag RUZINDANA
+                Occur 1
+
+                Hashtag RwoT
+                Occur 1
+
+                Hashtag Kigali
+                Occur 1
+
+                Hashtag Africa
+                Occur 1
+
+                Hashtag photooftheday
+                Occur 1
+
+                Hashtag Canon
+                Occur 1
+
+                Hashtag pride
+                Occur 1
+
+                Hashtag rainbows
+                Occur 1
+
+                Hashtag lookingforrainbows
+                Occur 1
+
+                Hashtag sunnyskies
+                Occur 1
+
+                Hashtag fiji
+                Occur 1
+
+                Hashtag nature
+                Occur 1
+
+                Hashtag iphone
+                Occur 1
+
+                Hashtag photography
+                Occur 1
+
+                Hashtag මළඹේඅහ්
+                Occur 1
+
+                Hashtag mask
+                Occur 1
+
+                Hashtag society6
+                Occur 1
+
+                Hashtag pandemic
+                Occur 1
+
+                Hashtag staysafe
+                Occur 1
+
+                Hashtag cheers
+                Occur 1
+
+                Hashtag zamir
+                Occur 1
+
+                Hashtag sterling
+                Occur 1
+
+                Hashtag silver
+                Occur 1
+
+                Hashtag jewelry
+                Occur 1
+
+                Hashtag boots
+                Occur 1
+
+                Hashtag fashion
+                Occur 1
+
+                Hashtag paint
+                Occur 1
+
+                Hashtag ink
+                Occur 1
+
+                Hashtag amwriting
+                Occur 1
+
+                Hashtag wod
+                Occur 1
+
+                Hashtag bananidc
+                Occur 1
+
+                Hashtag rimwrites
+                Occur 1
+
+                Hashtag bananidcwrites
+                Occur 1
+
+                Hashtag rimsmusings
+                Occur 1
+
+                Hashtag Quiltsbysuewaldrep
+                Occur 1
+
+                Hashtag freeshippingusa
+                Occur 1
+
+                Hashtag bankholiday
+                Occur 1
+
+                Hashtag ABEGeorge
+                Occur 1
+
+                Hashtag KakizakiMasasumi
+                Occur 1
+
+                Hashtag Isolation
+                Occur 1
+
+                Hashtag lockdown
+                Occur 1
+
+                Hashtag solitude
+                Occur 1
+
+                Hashtag rebirth
+                Occur 1
+
+                Hashtag love
+                Occur 1
+
+                Hashtag 6abcaction
+                Occur 1
+
+                Hashtag Quotes
+                Occur 1
+
+                Hashtag LookUp
+                Occur 1
+
+                Hashtag Gold
+                Occur 1
+
+                Hashtag smallbusiness
+                Occur 1
+
+                Hashtag woolies
+                Occur 1
+
+                Hashtag ooak
+                Occur 1
+
+                Hashtag needlefelting
+                Occur 1
+
+                Hashtag needlecraft
+                Occur 1
+
+                Hashtag yorkshireartist
+                Occur 1
+
+                Hashtag madebyme
+                Occur 1
+
+                Hashtag scarboroughuk
+                Occur 1
+
+                Hashtag Newark
+                Occur 1
+
+
+Select the Platform
+        0 - quit
+        1 - twitter
+        2 - youtube
+        3 - facebook
+Enter selected platform (0 to 3)
