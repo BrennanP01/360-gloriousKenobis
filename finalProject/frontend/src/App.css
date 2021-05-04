@@ -1,0 +1,94 @@
+.base {
+	width: 86vmin;
+	height: 95vmin;
+	border: 2px solid grey;
+	//background-color: #43AABB;
+	background-color: #C5D4F1;
+	margin-top: 2vmin;
+	margin-left: 2vmin;
+	margin-bottom: 2vmin;
+}
+
+h3 {
+	//color: #333333;
+	color: blue;
+	font-size: 3.5vmin;
+	font-weight: bold;
+	margin-top: 4vmin;
+	margin-left: 18vmin;
+	margin-bottom: 2vmin;
+}
+
+.label {
+	color: #333333;
+	font-size: 2.3vmin;
+	margin-top: 2vmin;
+	margin-left: 2vmin;
+	margin-bottom: 2vmin;
+}
+
+.label1 {
+	color: #333333;
+	font-size: 2.5vmin;
+	font-weight: bold;
+	margin-top: 2vmin;
+	margin-left: 20vmin;
+	margin-bottom: 2vmin;
+}
+
+.selectP {
+	color: #333333;
+	background-color: #EEEEEE;
+	font-size: 2.3vmin;
+	margin-top: 1vmin;
+	margin-left: 4vmin;
+	margin-bottom: 1vmin;
+}
+
+.selectT {
+	color: #333333;
+	background-color: #EEEEEE;
+	font-size: 2.3vmin;
+	margin-top: 1vmin;
+	margin-left: 2vmin;
+	margin-bottom: 1vmin;
+}
+
+.input {
+	width: 30%;
+	color: #333333;
+	background-color: #EEEEEE;
+	font-size: 2.3vmin;
+	margin-top: 1vmin;
+	margin-left: 5vmin;
+	margin-bottom: 1vmin;
+}
+
+.textarea {
+	height: 45%;
+	width: 75%;
+	color: #333333;
+	background-color: #EEEEEE;
+	font-size: 2.3vmin;
+	margin-top: 2vmin;
+	margin-left: 10vmin;
+	margin-bottom: 2vmin;
+}
+
+.submit {
+	width: 25%;
+	height: 5%;
+	border: 2px solid grey;
+	//background-color: lightgrey;
+	background-color: #BBBBBB;
+	color: black;
+	text-align: center;
+/*	font-size: 80%;*/
+	font-size: 2.5vmin;
+	font-weight: bold;
+	margin-left: 35%;
+	margin-top: 1.5%;
+	margin-bottom: 1.5%;
+	margin-right: 5%;
+	padding: 1%;
+}
