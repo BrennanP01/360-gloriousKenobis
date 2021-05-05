@@ -25,6 +25,7 @@ h3 {
 	margin-top: 2vmin;
 	margin-left: 2vmin;
 	margin-bottom: 2vmin;
+	//display: block;
 }
 
 .label1 {
@@ -34,6 +35,7 @@ h3 {
 	margin-top: 2vmin;
 	margin-left: 20vmin;
 	margin-bottom: 2vmin;
+	display: block;
 }
 
 .selectP {
@@ -91,4 +93,5 @@ h3 {
 	margin-bottom: 1.5%;
 	margin-right: 5%;
 	padding: 1%;
+	display: block;
 }

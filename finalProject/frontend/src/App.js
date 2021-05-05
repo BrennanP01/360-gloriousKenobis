@@ -3,7 +3,7 @@ import './App.css';
 
 function App() {
 	function requestInfo() {
-		var localUrl = "http://localhost:7071/api/FinalProject1"
+		var localUrl = "http://localhost:7071/api/finalProjectMVRC"
 		//var prodUrl = "https://gk-app-prog-lang-final.azurewebsites.net/api/getSocialMediaData?code=P2qWdJ5F0E921b6PFxyTRkcCoGiISWVuRPEpMNHLnki2i9HfaXkR5Q=="
 
 		var platform = document.getElementById ("platform").value;
@@ -44,8 +44,6 @@ function App() {
 			<label className="label1">
 				Input Parameters
 			</label>
-			<br></br>
-			<br></br>
 			<label htmlFor="platform" className="label">
 				Select Platform
 			</label>
@@ -79,12 +77,9 @@ function App() {
 			>
 				Submit
 			</button>
-			<br></br>
-			<br></br>
 			<label className="label1">
 				Output Parameters
 			</label>
-			<br></br>
 			<textarea 
 				id="answer" 
 				name="answer"  
