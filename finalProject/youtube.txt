@@ -1,0 +1,58 @@
+Select the Information to Request
+=================================
+
+Select the Platform
+        0 - quit
+        1 - twitter
+        2 - youtube
+        3 - facebook
+Enter selected platform (0 to 3): 2
+Enter the message to search: rainbow
+Select timezone
+        0 - est
+        1 - cst
+        2 - mst
+        3 - pst
+        4 - akst
+        5 - hst
+Enter timezone (0 to 5): 2
+
+Information Returned from the Web Service
+=========================================
+
+        Platform youtube
+        Time 13
+                Hashtag #Rainbow
+                Occur 1
+
+                Hashtag #KaceyMusgraves.
+                Occur 1
+
+                Hashtag #171
+                Occur 1
+
+                Hashtag #AmongUs
+                Occur 1
+
+                Hashtag #Aphmau.
+                Occur 1
+
+                Hashtag #1
+                Occur 1
+
+                Hashtag #79
+                Occur 1
+
+                Hashtag #howtodraw
+                Occur 1
+
+                Hashtag #drawsocute
+                Occur 1
+
+
+Select the Platform
+        0 - quit
+        1 - twitter
+        2 - youtube
+        3 - facebook
+Enter selected platform (0 to 3):
