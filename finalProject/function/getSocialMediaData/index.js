@@ -11,50 +11,46 @@ const Twit = require('twit');
 var fs = require('fs');
 var config = require('./config');
 //?plat=twitter&hash=rainbow&time=cst
+//&plat=twitter&hash=rainbow&time=cst
 
 // package for youtube API
 const { google } = require('googleapis');
 var ytConfig = require('./ytconfig');
 //?plat=youtube&hash=rainbow&time=cst
-
-// package for 
+//&plat=youtube&hash=rainbow&time=cst
 
 // initialize the response message
 var responseMessage = "";
 // initialize the response info object
 var responseInfo = {};
-var responseTime = null;
 
 module.exports = async function (context, req) {
     console.log("Starting");
+    var responseTime = null;
     // inputs for the function
     const platform = req.query.plat;
     const hashtag = req.query.hash;
     const timezone = req.query.time;
     //supported timezones are est, cst, mst, pst, akst, hst
 
-    if(platform == 'facebook'){
-        responseMessage = "facebook";
-        const facebookIdealTime = 11; // TODO find right time
-        responseTime = calculateTime(facebookIdealTime, timezone);
-        //responseHashes = getFacebookHashes(hashtag);
-    }else if(platform == 'youtube'){
-        responseHashes = await getYoutubeHashes(hashtag, timezone, context);
+    if(platform == 'youtube'){
+        const youtubeIdealTime = 14;
+        responseTime = calculateTime(youtubeIdealTime, timezone);
+        responseHashes = await getYoutubeHashes(hashtag, context, responseTime);
     }else if(platform == 'twitter'){
-        responseHashes = await getTwitterHashes(hashtag, context, timezone);
+        const twitterIdealTime = 9;
+        responseTime = calculateTime(twitterIdealTime, timezone);
+        responseHashes = await getTwitterHashes(hashtag, context, responseTime);
     }else{
         responseMessage = "Error: Unsupported Platform";
     }
 
     if(responseTime == null){
-        responseMessage = "Error: Unsupported Timezone";
-    }else{
-        responseMessage = JSON.stringify(responseInfo);
+        responseMessage = responseMessage + "Error: Unsupported Timezone\n";
+        context.res = {
+            body: responseMessage
+        };
     }
-
-    context.res = {
-        body: responseMessage
-    };
 }
 
 // returns time in CST, 24 hour format, on the hour
@@ -84,17 +80,10 @@ function writeToBlob(dataToWrite, context){
 }
 
 /***********************************
-            FACEBOOK
-***********************************/
-//gets related hashtags from facebook
-function getFacebookHashes(hashtag){
-}
-
-/***********************************
             YOUTUBE
 ***********************************/
 //gets related hashtags from youtube
-async function getYoutubeHashes(hashtag, timezone, context){
+async function getYoutubeHashes(hashtag, context, responseTime){
     var hashtagOccurances = [];
     ytkey = ytConfig;
     console.log(ytkey);
@@ -132,26 +121,29 @@ async function getYoutubeHashes(hashtag, timezone, context){
             }
         }
     }
-    const youtubeIdealTime = 14; // TODO find right time
-    responseTime = calculateTime(youtubeIdealTime, timezone);
     responseInfo.platform = "youtube";
     responseInfo.time = responseTime;
     responseInfo.hashtags = hashtagOccurances;
-    writeToBlob(responseInfo, context);
     console.log(responseInfo);
-}
 
+    responseMessage = JSON.stringify(responseInfo);
+    context.res = {
+        body: responseMessage
+    };
+    // writeToBlob(responseInfo, context);
+
+}
 
 /***********************************
             TWITTER
 ***********************************/
 //gets related hashtags from twitter
-async function getTwitterHashes(hashtag, context, timezone){
-    var done = await queryTwitter(hashtag, context, timezone);
+async function getTwitterHashes(hashtag, context, responseTime){
+    var done = await queryTwitter(hashtag, context, responseTime);
 }
 
 // makes the get request, then writes the data into a file
-function queryTwitter(hashtag, context, timezone){
+function queryTwitter(hashtag, context, responseTime){
     var T = new Twit(config);
     // paramaters for the tweets to search
     params = {
@@ -198,16 +190,19 @@ function queryTwitter(hashtag, context, timezone){
             });
 
             //create the json object to write to the file
-            const twitterIdealTime = 9; // TODO find right time
-            responseTime = calculateTime(twitterIdealTime, timezone);
             responseInfo.platform = "twitter";
             responseInfo.time = responseTime;
             responseInfo.hashtags = hashtagOccurances;
             // Write to the file
             // fs.writeFileSync("./hashtags.json", JSON.stringify(hashtagOccurances));
-            writeToBlob(responseInfo, context);
+            responseMessage = JSON.stringify(responseInfo);
+            context.res = {
+                body: responseMessage
+            };
+            // writeToBlob(responseInfo, context);
             resolve(data);
         });
+        
     });
 }
 
